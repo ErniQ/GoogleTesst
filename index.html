@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pusty HTML z elementem document-content</title>
+</head>
+
+<body>
+    <div id="document-content"></div>
+
+    <!-- Tutaj możesz dołączyć i umieścić swoje skrypty JavaScript -->
+    <script src="https://apis.google.com/js/api.js"></script>
+<script>
+    gapi.load('client', init);
+
+    function init() {
+        gapi.client.init({
+            apiKey: 'AIzaSyBoqw7yQ8EDHOeKlHswEmVstbnkdfLUYdY',
+            discoveryDocs: ['https://docs.googleapis.com/$discovery/rest?version=v1'],
+        }).then(function () {
+            // Klient został pomyślnie zainicjowany
+        }).catch(function (error) {
+            console.error('Błąd inicjalizacji klienta:', error);
+        });
+
+        gapi.client.load('docs', 'v1', function() {
+            // Tutaj możesz umieścić kod, który korzysta z gapi.client.docs
+            gapi.client.docs.documents.get({
+                documentId: '1TOtSf0t4O0QVXTiAca-lNIouNG5XblL37pUy1qgec1A',
+            }).then(function (response) {
+                var content = response.result.body.content;
+                var documentContent = document.getElementById('document-content');
+                documentContent.innerHTML = content;
+            });
+        });
+    }
+</script>
+
+</body>
+
+</html>
